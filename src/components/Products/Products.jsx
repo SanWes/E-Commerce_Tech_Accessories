@@ -13,11 +13,11 @@ const Products = ({ products, onAddToCart }) => {
         <div className={classes.toolbar} /> 
         
         {/* Loop through products to display them all */}
-            <Grid container justify="center" spacing={4}>
+            <Grid container justifyContent="center" spacing={4} >
                 {products.map((product) => (
-                    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3} >
                     {/* xs sm md lg are for different mobile response sizes */}
-                    <Product product={product} onAddToCart={onAddToCart} />
+                    <Product product={product} onAddToCart={onAddToCart}  />
                     {/*Product componenet is being sent with each specific product */}
                     </Grid>
                 ))}

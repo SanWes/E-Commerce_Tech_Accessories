@@ -9,4 +9,4 @@ npm install @material-ui/core @material-ui/icons @chec/commerce.js @stripe/react
 import App from './App';
 
 //The app will render
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
