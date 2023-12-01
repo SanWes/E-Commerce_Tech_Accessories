@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# CodiGo-Space eCommerce Store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+CodiGo-Space is an eCommerce store built with HTML, CSS, JavaScript, React, Commerce.js, and Stripe API. This platform hosts a variety of tech products essential for tech enthusiasts. Users can browse through items, add them to the cart, and securely complete purchases using the Stripe API.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+1. [Installation Instructions](#installation-instructions)
+2. [Usage Guide](#usage-guide)
+3. [Features](#features)
+4. [Technologies Used](#technologies-used)
+5. [Contributions](#contributions)
+6. [License](#license)
+7. [Contact Information](#contact-information)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation Instructions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+To set up the project:
 
-### `npm test`
+1. Clone this repository.
+2. Navigate to the project directory.
+3. Install dependencies using `npm install`.
+4. Start the application using `npm start`.
+5. Access the store through the provided URL.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage Guide
 
-### `npm run build`
+TechMart offers the following features:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Browse and explore different tech products.
+- Add items to the cart.
+- Securely complete purchases using the Stripe API.
+- Consistent and responsive UI across various screen sizes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Key features include:
 
-### `npm run eject`
+- **Stripe API Integration:** Secure payment processing after completing proper form inputs.
+- **Interactive UI:** Seamless addition and removal of items from the cart.
+- **Responsive Design:** Consistent and optimized UI across different screen sizes.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies Used
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- HTML/CSS: Basic structure and styling of the website.
+- JavaScript/React: Frontend development for interactive features.
+- Commerce.js: Platform for building the eCommerce store.
+- Stripe API: Integration for secure payment processing.
+- Material UI: Framework for consistent and responsive design.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contributions
 
-## Learn More
+Contributions are welcome! Refer to the [Contribution Guidelines](CONTRIBUTING.md) for more information on contributing to the project.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the [MIT License](LICENSE.md).
 
-### Code Splitting
+## Contact Information
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For inquiries or collaborations, feel free to contact connect on [LinkedIn](https://www.linkedin.com/in/wesley-sanchez/).
