@@ -1,4 +1,15 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Firebase
+.firebase/
+.firebaserc
++firebase-debug.log
++firebase-debug.*.log
+
+# Editor configs
+.vscode/
+.idea/
+
+# CRA cache
+.cache/
 
 # dependencies
 /node_modules
@@ -13,12 +24,21 @@
 
 # misc
 .env
-.DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.DS_Store
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
++npm-debug.log*
++yarn-debug.log*
++yarn-error.log*
++*.log
+
+# Mac system file
++.AppleDouble
+
+# Windows system files
++Thumbs.db
++ehthumbs.db
++Desktop.ini

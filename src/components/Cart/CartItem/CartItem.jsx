@@ -1,39 +1,56 @@
-import React from 'react'
-import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@material-ui/core'
+import React from 'react';
+import {
+    Typography,
+    Button,
+} from '@mui/material';
 
-import useStyles from './cartItemStyles'
+import {
+    StyledCard,
+    StyledCardMedia,
+    StyledCardContent,
+    StyledCardActions,
+    ButtonsWrapper,
+} from './CartItemStyles';
 
-const CartItem = ( { item, onUpdateCartQty, onRemoveFromCart } ) => {
-    
-    const classes = useStyles();
+const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
+    const handleDecrease = () => {
+        if (item.quantity > 1) {
+            onUpdateCartQty(item.id, item.quantity - 1);
+        }
+    };
 
-    // console.log("***************",item.image)
+    const handleIncrease = () => {
+        onUpdateCartQty(item.id, item.quantity + 1);
+    };
 
     return (
-        <Card className="cart-item">
+        <StyledCard className="cart-item">
+            <StyledCardMedia image={item.image} alt={item.name} />
 
-            <CardMedia className={classes.media} image={item.image.url} alt={item.name}   />
-        
-            {/* <img className={classes.media} src={item.image.url} alt={item.name} /> */}
+            <StyledCardContent>
+                <Typography variant="h6">{item.name}</Typography>
+                <Typography variant="subtitle1">
+                    ${(item.price * item.quantity).toFixed(2)}
+                </Typography>
+            </StyledCardContent>
 
-            <CardContent className={classes.cardContent} >
-                <Typography variant="h4">{item.name} </Typography>
-                <Typography variant="h5">{item.line_total.formatted_with_symbol} </Typography>
-            </CardContent>
+            <StyledCardActions>
+                <ButtonsWrapper>
+                    <Button size="small" onClick={handleDecrease}>-</Button>
+                    <Typography>{item.quantity}</Typography>
+                    <Button size="small" onClick={handleIncrease}>+</Button>
+                </ButtonsWrapper>
 
-            <CardActions className={classes.cardActions} >
-                <div className={classes.buttons} >
-                    <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity-1)}>-</Button>
-                    <Typography>{item.quantity}
-                    </Typography>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => onRemoveFromCart(item.id)}
+                >
+                    Remove
+                </Button>
+            </StyledCardActions>
+        </StyledCard>
+    );
+};
 
-                    <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity+1)}>+</Button>
-                </div>
-                <Button variant="contained" type="button" color="secondary" onClick={() => onRemoveFromCart(item.id)}>Remove</Button>
-            </CardActions>
-            
-        </Card>
-    )
-}
-
-export default CartItem
+export default CartItem;

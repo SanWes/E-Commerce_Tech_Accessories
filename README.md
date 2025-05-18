@@ -1,63 +1,70 @@
-# CodiGo-Space eCommerce Store
+# 🛒 CodiGo-Space (v2) – Firebase eCommerce App
 
-## Description
+A clean, responsive tech store built with **React** and **Firebase**. Users can browse products, add them to their cart, and keep that cart saved across sessions — even after closing the tab. This version replaces Commerce.js with a custom Firebase setup, giving me full control of how the app works under the hood.
 
-CodiGo-Space is an eCommerce store built with HTML, CSS, JavaScript, React, Commerce.js, and Stripe API. This platform hosts a variety of tech products essential for tech enthusiasts. Users can browse through items, add them to the cart, and securely complete purchases using the Stripe API.
+---
 
-## Table of Contents
+## 💡 What It Does
 
-1. [Installation Instructions](#installation-instructions)
-2. [Usage Guide](#usage-guide)
-3. [Features](#features)
-4. [Technologies Used](#technologies-used)
-5. [Contributions](#contributions)
-6. [License](#license)
-7. [Contact Information](#contact-information)
+- ✅ Pulls products from a Firestore database
+- 🛒 Users can add/remove items from their cart
+- 🔁 Cart stays saved using Firestore + localStorage
+- 🧼 Clean UI built with Material UI and React
+- 📱 Mobile-friendly and responsive
 
-## Installation Instructions
+---
 
-To set up the project:
+## ⚙️ Tech Stack
 
-1. Clone this repository.
-2. Navigate to the project directory.
-3. Install dependencies using `npm install`.
-4. Start the application using `npm start`.
-5. Access the store through the provided URL.
+- **React** – Frontend framework
+- **Firebase Firestore** – Stores product and cart data
+- **Material UI** – UI components and styling
+- **React Router** – Page navigation
+- **localStorage** – Cart session tracking
 
-## Usage Guide
+---
 
-TechMart offers the following features:
+## 🔧 Why I Built This
 
-- Browse and explore different tech products.
-- Add items to the cart.
-- Securely complete purchases using the Stripe API.
-- Consistent and responsive UI across various screen sizes.
+Originally built this app using Commerce.js, but decided to rebuild the cart system from scratch using Firebase. That meant creating my own cart logic, syncing data to Firestore, and handling persistence — just like a real eCommerce backend.
 
-## Features
+This gave me more control, better understanding of data flow, and showed me how to solve problems like cart syncing, Firestore reads/writes, and state persistence the hard way — but the right way.
 
-Key features include:
+---
 
-- **Stripe API Integration:** Secure payment processing after completing proper form inputs.
-- **Interactive UI:** Seamless addition and removal of items from the cart.
-- **Responsive Design:** Consistent and optimized UI across different screen sizes.
+## 📁 Firestore Structure
 
-## Technologies Used
+- `products` – Each doc = one product (name, price, image, description)
+- `carts` – Each doc = one user’s cart (items array with product data + quantity)
 
-- HTML/CSS: Basic structure and styling of the website.
-- JavaScript/React: Frontend development for interactive features.
-- Commerce.js: Platform for building the eCommerce store.
-- Stripe API: Integration for secure payment processing.
-- Material UI: Framework for consistent and responsive design.
+---
 
+## 🛠️ Setup Instructions
 
-## Contributions
+1. Clone the repo
+2. Run `npm install`
+3. Add your Firebase config in `/config/firebase.js`
+4. Run `npm start`
 
-Contributions are welcome! Refer to the [Contribution Guidelines](CONTRIBUTING.md) for more information on contributing to the project.
+---
 
-## License
+## 🚧 Still In Progress
 
-This project is licensed under the [MIT License](LICENSE.md).
+- Add-to-cart button on product cards
+- Checkout page (coming soon)
+- Cart context to sync count sitewide
+- Optional: Add auth or Stripe later
 
-## Contact Information
+---
 
-For inquiries or collaborations, feel free to contact connect on [LinkedIn](https://www.linkedin.com/in/wesley-sanchez/).
+## 🙋‍♂️ About Me
+
+Built by Wes, a self-taught Full Stack Software Engineer with a background in psychology, bootcamp-certified, and committed to building things that work — and scale.
+
+> “I’m not just learning how to code. I’m learning how to solve real problems with code.”
+
+---
+
+## ✅ Live Demo
+
+Coming soon...
