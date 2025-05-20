@@ -8,7 +8,7 @@ import {
     } from './AllProductsStyles';
 
 import { fetchAllProducts } from '../../../config/fetchAllProducts';
-import { getOrCreateCart, addItemToCart } from '../../../config/fetchCarts';
+import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
 
     const AllProducts = () => {
     const [products, setProducts] = useState([]);
@@ -52,17 +52,25 @@ import { getOrCreateCart, addItemToCart } from '../../../config/fetchCarts';
         const product = products.find((p) => p.id === productId);
         if (!product) return;
 
+        // console.log('Adding to cart:', product, quantity);
+        
+        console.log("🔍 ADD TO CART DEBUG", {
+            cartId: cart?.id,
+            PRid: product.id,
+            product,
+            quantity,
+            image: product.image,
+            price: product.price
+        });
+
+
         try {
-            await addItemToCart(cart.id, {
-            id: product.id,
-            name: product.name || '',
-            image: product.image?.url || '',
-            price: {
-                raw: product.price?.raw || 0,
-                formatted: product.price?.formatted || '',
-                formatted_with_symbol: product.price?.formatted_with_symbol || ''
-            },
-            quantity: quantity || 1,
+            await addToCart(cart.id, {
+                id: product.id,
+                name: product.name || '',
+                image: product.image || '',
+                price: product.price || 0,
+                quantity: quantity || 1,
             });
 
             // Refetch updated cart 
@@ -70,9 +78,10 @@ import { getOrCreateCart, addItemToCart } from '../../../config/fetchCarts';
             setCart(updatedCart);
 
             alert(`${product.name} added to cart`);
-            } catch (error) {
+
+        } catch (error) {
             console.error("Error adding item to cart:", error);
-            }
+        }
     };
 
     return (

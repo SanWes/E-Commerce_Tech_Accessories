@@ -1,8 +1,9 @@
-// OneProduct.jsx
 import React from 'react';
 import {
     Typography,
-    IconButton,
+    Button,
+    CardContent,
+    Box,
 } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
 
@@ -11,41 +12,48 @@ import {
     StyledCardMedia,
     StyledCardContentWrapper,
     StyledCardActions,
-} from './OneProductStyles';
+    StyledDescription,
+    } from './OneProductStyles';
 
 const OneProduct = ({ product, onAddToCart }) => {
-return (
-    <StyledCard>
+    return (
+        <StyledCard>
         <StyledCardMedia
-            image={product.image?.url}
+            image={product.image || 'https://via.placeholder.com/300'}
             title={product.name}
         />
-    <div>
-        <StyledCardContentWrapper>
-            <Typography variant="h5" gutterBottom>
-            {product.name}
-            </Typography>
-            <Typography variant="h5">
-            {product.price?.formatted_with_symbol}
-            </Typography>
-        </StyledCardContentWrapper>
-        <Typography
-            variant="body2"
-            color="textSecondary"
-            dangerouslySetInnerHTML={{ __html: product.description }}
-            sx={{ paddingX: 2 }}
-            />
-        </div>
-        <StyledCardActions disableSpacing>
-            <IconButton
-            aria-label="Add to Cart"
+
+        <CardContent>
+
+            <StyledCardContentWrapper>
+                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    {product.name}
+                </Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                    ${product.price}
+                </Typography>
+            </StyledCardContentWrapper>
+
+            <Box>
+            <StyledDescription>
+                {product.description}
+            </StyledDescription>
+            </Box>
+
+
+        </CardContent>
+
+        <StyledCardActions>
+            <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddShoppingCart />}
             onClick={() => onAddToCart(product.id, 1)}
             >
-            <AddShoppingCart />
             Add to Cart
-        </IconButton>
+            </Button>
         </StyledCardActions>
-    </StyledCard>
+        </StyledCard>
     );
 };
 

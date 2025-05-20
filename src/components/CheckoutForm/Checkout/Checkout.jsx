@@ -18,32 +18,32 @@ import {
     SpinnerWrapper,
 } from './CheckoutStyles';
 
-    import AddressForm from '../AddressForm';
-    import PaymentForm from '../PaymentForm';
+import AddressForm from '../AddressForm';
+import PaymentForm from '../PaymentForm';
 
-    import { db } from '../../../config/firebase'; // your Firestore instance
-    import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../../config/firebase'; // your Firestore instance
+import { collection, addDoc } from 'firebase/firestore';
 
-    const steps = ['Shipping address', 'Payment details'];
+const steps = ['Shipping address', 'Payment details'];
 
-    const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
-    const [activeStep, setActiveStep] = useState(0);
-    const [shippingData, setShippingData] = useState({});
-    const [orderId, setOrderId] = useState(null);
-    const [isFinished, setIsFinished] = useState(false);
+const Checkout = ({ cart, order, onCaptureCheckout, error }) => {
+const [activeStep, setActiveStep] = useState(0);
+const [shippingData, setShippingData] = useState({});
+const [orderId, setOrderId] = useState(null);
+const [isFinished, setIsFinished] = useState(false);
 
-    const navigate = useNavigate();
+const navigate = useNavigate();
 
     // No useEffect to generate token here because Firebase approach is different
 
-    const nextStep = () => setActiveStep((prev) => prev + 1);
-    const backStep = () => setActiveStep((prev) => prev - 1);
+const nextStep = () => setActiveStep((prev) => prev + 1);
+const backStep = () => setActiveStep((prev) => prev - 1);
 
-    const handleShippingData = async (data) => {
+const handleShippingData = async (data) => {
         setShippingData(data);
 
         // Create a new order document in Firestore with shipping data and cart
-        try {
+    try {
         const orderRef = await addDoc(collection(db, 'orders'), {
             shippingData: data,
             cart,
@@ -53,7 +53,7 @@ import {
 
         setOrderId(orderRef.id); // store Firestore order doc id as "token"
         nextStep();
-        } catch (err) {
+    } catch (err) {
         console.error('Error creating order in Firestore:', err);
         // Optionally show error to user or redirect
         navigate('/cart');

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import CartItem from './CartItem/CartItem';
 import {
@@ -18,34 +18,37 @@ import {
     clearCart,
 } from '../../config/fetchCarts';
 
+
 const Cart = () => {
+    const location = useLocation();
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCart = async () => {
-            const storedCartId = localStorage.getItem('cartId');
-            const cartData = await getOrCreateCart(storedCartId);
-            console.log('Fetched Cart data:', cartData);
-            setCart(cartData);
-                // Uncomment the following lines to set a test cart    
-            // setCart({
-                // id: cartData.id,
-                // items: [
-                //     {
-                //     id: '1',
-                //     name: 'Test Product',
-                //     image: 'https://via.placeholder.com/150',
-                //     price: 9.99,
-                //     quantity: 2
-                //     }
-                // ]
-                // });
-            localStorage.setItem('cartId', cartData.id);
-            setLoading(false);
+            try {
+                const storedCartId = localStorage.getItem('cartId');
+                const cartData = await getOrCreateCart(storedCartId);
+
+                // console.log('Fetched Cart data:', cartData);
+                
+                const normalizedItems = cartData.items.map(item => ({
+                    ...item,
+                    price: typeof item.price === 'object' ? item.price.raw || 0 : item.price,
+                    }));
+                setCart({ ...cartData, items: normalizedItems });
+                if (!storedCartId || storedCartId !== cartData.id) {
+                    localStorage.setItem('cartId', cartData.id);
+                }
+            } catch (error) {
+                console.error('Failed to fetch or create cart:', error);
+            } finally {
+                setLoading(false);
+            }
         };
+
         fetchCart();
-    }, []);
+    }, [location.pathname]);
 
     const handleUpdateQty = async (itemId, quantity) => {
         if (!cart) return;
@@ -71,7 +74,7 @@ const Cart = () => {
 
     if (loading) return <Typography>Loading cart...</Typography>;
 
-    const EmptyCart = () => (
+    const EmptyCart = (
         <Typography variant="subtitle1">
             You have no items in your shopping cart,{' '}
             <LinkStyled as={Link} to="/">
@@ -81,11 +84,11 @@ const Cart = () => {
         </Typography>
     );
 
-    const FilledCart = () => (
+    const FilledCart = (
         <>
             <Grid container spacing={3}>
                 {cart.items.map((item, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
+                    <Grid item xs={12} sm={4} key={item.id || item._id || index}>
                         <CartItem
                             item={item}
                             onUpdateCartQty={handleUpdateQty}
@@ -96,9 +99,9 @@ const Cart = () => {
             </Grid>
             <CardDetails>
                 <Typography variant="h4">
-                    Subtotal:{' '}
+                    Subtotal:{'$  '}
                     {cart.items
-                        .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                        .reduce((acc, item) => acc + item.price * (item.quantity || 1), 0)
                         .toFixed(2)}{' '}
                     USD
                 </Typography>
@@ -134,7 +137,7 @@ const Cart = () => {
             <Title variant="h3" gutterBottom>
                 Your Shopping Cart
             </Title>
-            {cart.items.length === 0 ? <EmptyCart /> : <FilledCart />}
+            {!cart || cart.items.length === 0 ? EmptyCart : FilledCart}
         </StyledContainer>
     );
 };
