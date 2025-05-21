@@ -2,33 +2,43 @@ import React from 'react';
 import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const Review = ({ cart }) => {
-    if (!cart || !cart.line_items) return null;
+    if (!cart || !cart.items || cart.items.length === 0) return null;
+
+    // Simple helper to format prices
+    const formatPrice = (amount) =>
+        new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(amount);
+
+    // Calculate subtotal
+    const subtotal = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
         <>
-        <Typography variant="h6" gutterBottom>
-            Order Summary
-        </Typography>
-        <List disablePadding>
-            {cart.line_items.map((product) => (
-            <ListItem key={product.id} style={{ padding: '10px 0' }}>
-                <ListItemText
-                primary={product.name}
-                secondary={`Quantity: ${product.quantity}`}
-                />
-                <Typography variant="body2">
-                {product.line_total?.formatted_with_symbol || `$${product.price}`}
-                </Typography>
-            </ListItem>
-            ))}
-            <Divider />
-            <ListItem style={{ padding: '10px 0' }}>
-            <ListItemText primary="Subtotal" />
-            <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-                {cart.subtotal?.formatted_with_symbol || `$${cart.total_price || 'N/A'}`}
+            <Typography variant="h6" gutterBottom>
+                Order Summary
             </Typography>
-            </ListItem>
-        </List>
+            <List disablePadding>
+                {cart.items.map((item) => (
+                    <ListItem key={item.id} style={{ padding: '10px 0' }}>
+                        <ListItemText
+                            primary={item.name}
+                            secondary={`Quantity: ${item.quantity}`}
+                        />
+                        <Typography variant="body2">
+                            {formatPrice(item.price * item.quantity)}
+                        </Typography>
+                    </ListItem>
+                ))}
+                <Divider />
+                <ListItem style={{ padding: '10px 0' }}>
+                    <ListItemText primary="Subtotal" />
+                    <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                        {formatPrice(subtotal)}
+                    </Typography>
+                </ListItem>
+            </List>
         </>
     );
 };

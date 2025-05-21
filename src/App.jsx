@@ -32,14 +32,6 @@ useEffect(() => {
     initialize();
 }, []);
 
-const handleCaptureCheckout = (checkoutData) => {
-    try {
-        setOrder(checkoutData);
-        setCart((prev) => ({ ...prev, items: [] })); // simple reset after order
-    } catch (error) {
-        setErrorMessage('Checkout failed: ' + error.message);
-    }
-};
 
 const totalItems = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
@@ -65,8 +57,8 @@ return (
                 element={
                 <Checkout
                     cart={cart}
+                    setCart={setCart}
                     order={order}
-                    onCaptureCheckout={handleCaptureCheckout}
                     error={errorMessage}
                 />
                 }
