@@ -13,34 +13,37 @@ import {
     StyledCardContentWrapper,
     StyledCardActions,
     StyledDescription,
-    } from './OneProductStyles';
+} from './OneProductStyles';
 
 const OneProduct = ({ product, onAddToCart }) => {
+    
     return (
         <StyledCard>
         <StyledCardMedia
+            component="img"
+            loading="lazy"
             image={product.image || 'https://via.placeholder.com/300'}
             title={product.name}
         />
 
-        <CardContent>
-
+        <CardContent sx={{ paddingBottom: 0 }}>
             <StyledCardContentWrapper>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                    {product.name}
-                </Typography>
-                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                    ${product.price}
-                </Typography>
+            
+            <Typography variant="h6" fontWeight={600} gutterBottom>
+                {product.name}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+                ${product.price}
+            </Typography>
             </StyledCardContentWrapper>
 
+            {product.description && (
             <Box>
-            <StyledDescription>
+                <StyledDescription>
                 {product.description}
-            </StyledDescription>
+                </StyledDescription>
             </Box>
-
-
+            )}
         </CardContent>
 
         <StyledCardActions>

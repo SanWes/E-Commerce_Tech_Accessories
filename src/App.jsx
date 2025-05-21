@@ -5,6 +5,7 @@ import { Products, Navbar, Cart, Checkout } from './components';
 
 import { fetchAllProducts } from './config/fetchAllProducts';
 import { getOrCreateCart } from './config/fetchCarts';
+import { CartProvider } from './context/CartContext';
 
 const App = () => {
     const [products, setProducts] = useState([]);
@@ -43,6 +44,9 @@ const handleCaptureCheckout = (checkoutData) => {
 const totalItems = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
 return (
+
+        <CartProvider cart={cart}>
+
         <Router>
         <div style={{ display: 'flex' }}>
             <CssBaseline />
@@ -70,6 +74,7 @@ return (
             </Routes>
         </div>
         </Router>
+        </CartProvider>
     );
 };
 

@@ -1,45 +1,61 @@
 // NavbarStyles.js
 import { styled, alpha } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography } from '@mui/material';
+import { AppBar, Toolbar, Typography, ListItemText } from '@mui/material';
 
 const drawerWidth = 0;
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
-  borderBottom: '5px solid rgba(0, 0, 0, 0.12)',
-  backgroundColor: 'SeaGreen',
+  borderBottom: '5px solid rgba(0, 0, 0, 0.1)',
+  backgroundColor: '#2e8b57', 
   [theme.breakpoints.up('sm')]: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
   },
+  padding: theme.spacing(0.5, 2), 
 }));
 
-export const StyledToolbar = styled(Toolbar)``;
+export const StyledToolbar = styled(Toolbar)({
+  minHeight: 64,
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
-  flexGrow: 1,
-  alignItems: 'center',
   display: 'flex',
+  alignItems: 'center',
   textDecoration: 'none',
+  color: '#fff',
+  fontWeight: 600,
+  fontSize: '1.1rem',
+  '& strong': {
+    color: '#ffd700',
+  },
 }));
 
 export const StyledImage = styled('img')(({ theme }) => ({
-  marginRight: '10px',
+  marginRight: theme.spacing(1.5),
+  height: 45,
+  borderRadius: 4,
 }));
 
 export const StyledGrow = styled('div')({
   flexGrow: 1,
 });
 
-export const StyledButtonContainer = styled('div')({});
+export const StyledButtonContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+}));
 
-// Optional: If you plan to add a search bar later, here’s the reusable search styles:
 export const StyledSearch = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha('#ffffff', 0.15),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha('#ffffff', 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -57,6 +73,7 @@ export const StyledSearchIcon = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: '#fff',
 }));
 
 export const StyledInputRoot = styled('div')({
@@ -68,7 +85,21 @@ export const StyledInputInput = styled('input')(({ theme }) => ({
   paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
   transition: theme.transitions.create('width'),
   width: '100%',
+  color: '#fff',
   [theme.breakpoints.up('md')]: {
     width: '20ch',
   },
+}));
+
+export const StyledDrawerList = styled('div')(({ theme }) => ({
+  width: 250,
+  paddingTop: theme.spacing(2),
+  backgroundColor: '#008c71',
+  height: '100%',
+}));
+
+export const StyledListItemText = styled(ListItemText)(() => ({
+  color: 'white',
+  fontWeight: 'bold',
+  fontSize: '1.1rem',
 }));

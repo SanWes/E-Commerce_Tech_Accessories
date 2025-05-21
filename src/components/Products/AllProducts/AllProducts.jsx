@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid, CircularProgress, Snackbar, Alert } from '@mui/material';
 import OneProduct from '../OneProduct/OneProduct';
 
 import {
     StyledMain,
     StyledToolbarSpacer,
-    } from './AllProductsStyles';
+    StyledGridContainer
+} from './AllProductsStyles';
 
 import { fetchAllProducts } from '../../../config/fetchAllProducts';
 import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
 
-    const AllProducts = () => {
+const AllProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState(null);
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
     // Load all products
     useEffect(() => {
         const loadProducts = async () => {
-            try {
-                const data = await fetchAllProducts();
-                setProducts(data);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-                setLoading(false);
-            }
+        try {
+            const data = await fetchAllProducts();
+            setProducts(data);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        } finally {
+            setLoading(false);
+        }
         };
 
         loadProducts();
@@ -34,12 +38,12 @@ import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
     // Get or create cart on mount
     useEffect(() => {
         const initCart = async () => {
-            try {
-                const cartData = await getOrCreateCart();
-                setCart(cartData);
-            } catch (error) {
-                console.error("Error initializing cart:", error);
-            }
+        try {
+            const cartData = await getOrCreateCart();
+            setCart(cartData);
+        } catch (error) {
+            console.error("Error initializing cart:", error);
+        }
         };
 
         initCart();
@@ -52,37 +56,40 @@ import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
         const product = products.find((p) => p.id === productId);
         if (!product) return;
 
-        // console.log('Adding to cart:', product, quantity);
-        
-        console.log("🔍 ADD TO CART DEBUG", {
-            cartId: cart?.id,
-            PRid: product.id,
-            product,
-            quantity,
-            image: product.image,
-            price: product.price
-        });
-
+        // console.log("🔍 ADD TO CART DEBUG", {
+        // cartId: cart?.id,
+        // PRid: product.id,
+        // product,
+        // quantity,
+        // image: product.image,
+        // price: product.price
+        // });
 
         try {
-            await addToCart(cart.id, {
-                id: product.id,
-                name: product.name || '',
-                image: product.image || '',
-                price: product.price || 0,
-                quantity: quantity || 1,
-            });
+        await addToCart(cart.id, {
+            id: product.id,
+            name: product.name || '',
+            image: product.image || '',
+            price: product.price || 0,
+            quantity: quantity || 1,
+        });
 
-            // Refetch updated cart 
-            const updatedCart = await getOrCreateCart(cart.id);
-            setCart(updatedCart);
+        const updatedCart = await getOrCreateCart(cart.id);
+        setCart(updatedCart);
 
-            alert(`${product.name} added to cart`);
+        // alert(`${product.name} added to cart`);
+        setSnackbarMessage(`${product.name} added to cart`);
+        setSnackbarOpen(true);
 
         } catch (error) {
-            console.error("Error adding item to cart:", error);
+        console.error("Error adding item to cart:", error);
         }
     };
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
+    };
+
 
     return (
         <StyledMain>
@@ -93,14 +100,26 @@ import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
             <CircularProgress />
             </div>
         ) : (
-            <Grid container justifyContent="center" spacing={4}>
+            <StyledGridContainer container spacing={4}>
             {products.map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
                 <OneProduct product={product} onAddToCart={handleAddToCart} />
                 </Grid>
             ))}
-            </Grid>
+            </StyledGridContainer>
         )}
+
+        <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+
         </StyledMain>
     );
 };

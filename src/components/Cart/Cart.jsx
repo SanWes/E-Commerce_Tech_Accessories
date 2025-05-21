@@ -1,3 +1,4 @@
+// Shopping Cart Display Page
 import React, { useEffect, useState, useCallback } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
