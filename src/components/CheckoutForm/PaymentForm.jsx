@@ -42,7 +42,8 @@ const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFireba
 
     return (
         <>
-            <Review cartItems={cartItems} shippingData={shippingData} />
+            <Review cart={{ items: Object.values(cartItems || {}) }} />
+
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
                 Payment Method

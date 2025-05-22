@@ -2,7 +2,10 @@ import React from 'react';
 import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const Review = ({ cart }) => {
-    if (!cart || !cart.items || cart.items.length === 0) return null;
+    // Safely extract actual cart items from possible nested structure
+    const cartItems = Array.isArray(cart?.items?.[1]) ? cart.items[1] : [];
+
+    if (!cartItems || cartItems.length === 0) return null;
 
     // Simple helper to format prices
     const formatPrice = (amount) =>
@@ -12,7 +15,7 @@ const Review = ({ cart }) => {
         }).format(amount);
 
     // Calculate subtotal
-    const subtotal = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     return (
         <>
@@ -20,7 +23,7 @@ const Review = ({ cart }) => {
                 Order Summary
             </Typography>
             <List disablePadding>
-                {cart.items.map((item) => (
+                {cartItems.map((item) => (
                     <ListItem key={item.id} style={{ padding: '10px 0' }}>
                         <ListItemText
                             primary={item.name}
