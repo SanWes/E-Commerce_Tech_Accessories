@@ -30,8 +30,25 @@ export const LinkStyled = styled('a')(({ theme }) => ({
 }));
 
 export const CardDetails = styled('div')(({ theme }) => ({
+  position: 'sticky',
+  bottom: 0,
+  left: 0,
+  zIndex: 1000,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(3),
+  marginTop: theme.spacing(4),
+  boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.1)',
+  borderTop: `1px solid ${theme.palette.divider}`,
+  borderRadius: '12px 12px 0 0',
   display: 'flex',
-  marginTop: '10%',
-  width: '100%',
   justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  flexWrap: 'wrap',
+  gap: theme.spacing(2),
+
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
 }));

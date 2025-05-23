@@ -133,14 +133,64 @@ const Cart = () => {
     );
 
     return (
-        <StyledContainer>
-            <div style={{ minHeight: 64 }} />
-            <Title variant="h3" gutterBottom>
-                Your Shopping Cart
-            </Title>
-            {!cart || cart.items.length === 0 ? EmptyCart : FilledCart}
-        </StyledContainer>
+    <StyledContainer>
+        <div style={{ minHeight: 64 }} />
+        <Title variant="h3" gutterBottom>
+        Your Shopping Cart
+        </Title>
+        {!cart || cart.items.length === 0 ? (
+        EmptyCart
+        ) : (
+        <>
+            <div style={{ paddingBottom: '120px' }}>
+            <Grid container spacing={3}>
+                {cart.items.map((item, index) => (
+                <Grid item xs={12} sm={4} key={item.id || item._id || index}>
+                    <CartItem
+                    item={item}
+                    onUpdateCartQty={handleUpdateQty}
+                    onRemoveFromCart={removeFromCart}
+                    />
+                </Grid>
+                ))}
+            </Grid>
+            </div>
+            <CardDetails>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                Subtotal:{' '}
+                <span style={{ fontWeight: 700, color: '#1976d2' }}>
+                $
+                {cart.items
+                    .reduce((acc, item) => acc + item.price * (item.quantity || 1), 0)
+                    .toFixed(2)}{' '}
+                USD
+                </span>
+            </Typography>
+            <div>
+                <EmptyButton
+                size="large"
+                variant="contained"
+                color="secondary"
+                onClick={handleEmptyCart}
+                >
+                Empty Cart
+                </EmptyButton>
+                <CheckoutButton
+                component={Link}
+                to="/checkout"
+                size="large"
+                variant="contained"
+                color="primary"
+                >
+                Checkout
+                </CheckoutButton>
+            </div>
+            </CardDetails>
+        </>
+        )}
+    </StyledContainer>
     );
+
 };
 
 export default Cart;
