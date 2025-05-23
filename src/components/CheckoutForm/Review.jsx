@@ -1,36 +1,39 @@
 import React from 'react';
 import { Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { useCart } from '../../context/CartContext';
 
-const Review = ({ cart }) => {
-    // Safely extract actual cart items from possible nested structure
-    const cartItems = Array.isArray(cart?.items?.[1]) ? cart.items[1] : [];
+const Review = () => {
+    const { cartData } = useCart();
 
-    if (!cartItems || cartItems.length === 0) return null;
+    const items = cartData?.items || [];
 
-    // Simple helper to format prices
+    if (!items.length) return null;
+
     const formatPrice = (amount) =>
         new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
         }).format(amount);
 
-    // Calculate subtotal
-    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = items.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 0), 0);
+
+    console.log('cartData.items:', items);
+
 
     return (
         <>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h4" gutterBottom>
                 Order Summary
             </Typography>
             <List disablePadding>
-                {cartItems.map((item) => (
-                    <ListItem key={item.id} style={{ padding: '10px 0' }}>
+                {items.map((item, index) => (
+                    <ListItem key={item.id || index} style={{ padding: '10px 0' }}>
                         <ListItemText
-                            primary={item.name}
+                            primary={item.name || 'Unnamed Product'}
                             secondary={`Quantity: ${item.quantity}`}
                         />
                         <Typography variant="body2">
-                            {formatPrice(item.price * item.quantity)}
+                            {formatPrice((item.price || 0) * item.quantity)}
                         </Typography>
                     </ListItem>
                 ))}

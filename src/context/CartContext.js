@@ -18,9 +18,9 @@ export const CartProvider = ({ children }) => {
   // On initial mount, get cartId from localStorage (if any)
     useEffect(() => {
         const storedCartId = localStorage.getItem('cartId');
-        if (storedCartId) {
-        setCartId(storedCartId);
-        }
+            if (storedCartId) {
+                setCartId(storedCartId);
+            }
     }, []);
 
     // Set up a real-time listener for the cart document in Firestore
@@ -32,16 +32,26 @@ export const CartProvider = ({ children }) => {
         const unsubscribe = onSnapshot(cartRef, (docSnap) => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
-                const itemsArray = Array.isArray(data.items)
-                ? data.items
-                : Object.values(data.items || {}); // Normalize if data is in object format
+            
+            // ////////////////////////////////// 
+            // Normalize items field
+                    let itemsArray = [];
+
+                    if (Array.isArray(data.items)) {
+                    itemsArray = data.items;
+                    } else if (typeof data.items === 'object' && data.items !== null) {
+                    itemsArray = Object.values(data.items);
+                    }
+
+                    // Remove falsy or malformed items
+                    itemsArray = itemsArray.filter(item => item && item.id && typeof item.quantity === 'number');
 
                 const totalQty = itemsArray.reduce(
-                (sum, item) => sum + (item.quantity || 0),
+                    (sum, item) => sum + (item.quantity || 0),
                 0
                 );
 
-                setCartData(data);
+                setCartData({ ...data, items: itemsArray });
                 setCartCount(totalQty);
             } else {
                 // Cart does not exist or was deleted
@@ -60,6 +70,7 @@ export const CartProvider = ({ children }) => {
         try {
             const cartRef = doc(db, 'carts', cartId);
             await setDoc(cartRef, { items: [] }, { merge: true }); // Clear items in Firestore
+
             setCartData({ items: [] }); // Clear local cart state
             setCartCount(0); // Reset count
         } catch (error) {

@@ -11,6 +11,9 @@
 # CRA cache
 .cache/
 
+# Notes
+notes.txt
+
 # dependencies
 /node_modules
 /.pnp

@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Button, Divider, TextField } from '@mui/material';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import Review from './Review';
 
 const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFirebaseOrder }) => {
-    const [cardDetails, setCardDetails] = useState({
+    const methods = useForm({
+        mode: 'onTouched',
+        defaultValues: {
         cardName: '',
         cardNumber: '',
         expDate: '',
         cvc: ''
+        }
     });
 
-    const handleChange = (e) => {
-        setCardDetails({ ...cardDetails, [e.target.name]: e.target.value });
-    };
+    const { handleSubmit, control, formState: { errors } } = methods;
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    const onSubmit = (data) => {
         const orderData = {
             items: cartItems,
             customer: {
@@ -32,7 +32,7 @@ const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFireba
                 postalCode: shippingData.zip,
                 option: shippingData.shippingOption
             },
-            payment: cardDetails, // Will not charge, just storing for mock
+            payment: data, // Use validated form data
             createdAt: new Date().toISOString()
         };
 
@@ -40,59 +40,113 @@ const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFireba
         nextStep();
     };
 
+    // console.log('cartItems:', cartItems);
+    // console.log('Review input:', Object.values(cartItems || {}));
+
     return (
         <>
-            <Review cart={{ items: Object.values(cartItems || {}) }} />
+        <Review cart={{ items: Object.values(cartItems || {}) }} />
+        
+        <Divider />
+        <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
+            Payment Method
+        </Typography>
 
-            <Divider />
-            <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
-                Payment Method
-            </Typography>
-
-            <form onSubmit={handleSubmit}>
+        <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+                name="cardName"
+                control={control}
+                rules={{ required: 'Name on card is required' }}
+                render={({ field }) => (
                 <TextField
                     label="Name on Card"
-                    name="cardName"
                     fullWidth
                     margin="normal"
-                    value={cardDetails.cardName}
-                    onChange={handleChange}
+                    error={!!errors.cardName}
+                    helperText={errors.cardName ? errors.cardName.message : ''}
+                    {...field}
                 />
+                )}
+            />
+
+            <Controller
+                name="cardNumber"
+                control={control}
+                rules={{
+                required: 'Card number is required',
+                pattern: {
+                    value: /^\d{16}$/,
+                    message: 'Card number must be 16 digits'
+                }
+                }}
+                render={({ field }) => (
                 <TextField
                     label="Card Number"
-                    name="cardNumber"
                     fullWidth
                     margin="normal"
-                    value={cardDetails.cardNumber}
-                    onChange={handleChange}
+                    error={!!errors.cardNumber}
+                    helperText={errors.cardNumber ? errors.cardNumber.message : ''}
+                    {...field}
                 />
+                )}
+            />
+
+            <Controller
+                name="expDate"
+                control={control}
+                rules={{
+                required: 'Expiration date is required',
+                pattern: {
+                    value: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                    message: 'Expiration date must be in MM/YY format'
+                }
+                }}
+                render={({ field }) => (
                 <TextField
-                    label="Expiration Date"
-                    name="expDate"
+                    label="Expiration Date (MM/YY)"
                     fullWidth
                     margin="normal"
-                    value={cardDetails.expDate}
-                    onChange={handleChange}
+                    error={!!errors.expDate}
+                    helperText={errors.expDate ? errors.expDate.message : ''}
+                    {...field}
                 />
+                )}
+            />
+
+            <Controller
+                name="cvc"
+                control={control}
+                rules={{
+                required: 'CVC is required',
+                pattern: {
+                    value: /^\d{3,4}$/,
+                    message: 'CVC must be 3 or 4 digits'
+                }
+                }}
+                render={({ field }) => (
                 <TextField
                     label="CVC"
-                    name="cvc"
                     fullWidth
                     margin="normal"
-                    value={cardDetails.cvc}
-                    onChange={handleChange}
+                    error={!!errors.cvc}
+                    helperText={errors.cvc ? errors.cvc.message : ''}
+                    {...field}
                 />
+                )}
+            />
 
-                <br />
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Button variant="outlined" onClick={backStep}>
-                        Back
-                    </Button>
-                    <Button type="submit" variant="contained" color="primary">
-                        Place Order
-                    </Button>
-                </div>
+            <br />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button variant="outlined" onClick={backStep}>
+                Back
+                </Button>
+                <Button type="submit" variant="contained" color="primary">
+                Place Order
+                </Button>
+            </div>
             </form>
+        </FormProvider>
         </>
     );
 };
