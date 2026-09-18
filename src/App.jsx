@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Products, Navbar, Cart, Checkout, Auth, ProtectedRoute } from './components';
+import HeroTerminal from './components/Hero/HeroTerminal';
 
 import { getOrCreateCart } from './config/fetchCarts';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import retroTheme from './theme/retroTheme';
 
 const App = () => {
     const [cart, setCart] = useState(null);
@@ -31,6 +33,7 @@ const totalItems = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) ||
 
 return (
 
+        <ThemeProvider theme={retroTheme}>
         <AuthProvider>
         <CartProvider cart={cart}>
 
@@ -41,7 +44,12 @@ return (
             <Routes>
             <Route
                 path="/"
-                element={<Products />}
+                element={
+                    <>
+                        <HeroTerminal />
+                        <Products />
+                    </>
+                }
             />
             <Route
                 path="/auth"
@@ -69,6 +77,7 @@ return (
         </Router>
         </CartProvider>
         </AuthProvider>
+        </ThemeProvider>
     );
 };
 

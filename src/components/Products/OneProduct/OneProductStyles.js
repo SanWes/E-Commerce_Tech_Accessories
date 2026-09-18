@@ -7,11 +7,14 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'space-between',
   margin: 'auto',
-  borderRadius: theme.spacing(2),
-  boxShadow: theme.shadows[3],
-  transition: 'transform 0.2s ease-in-out',
+  borderRadius: 4,
+  border: '2px solid #1A1A1D',
+  backgroundColor: '#F5F5DC',
+  boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+  transition: 'transform 0.2s ease-in-out, border-color 0.3s ease',
   '&:hover': {
-    transform: 'scale(1.015)',
+    transform: 'translateY(-2px)',
+    borderColor: '#D4A017',
   },
 }));
 
@@ -19,9 +22,7 @@ export const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
   height: 200,
   width: '100%',
   objectFit: 'cover',
-  // paddingTop: '56.25%', // 16:9 aspect ratio
-  borderTopLeftRadius: theme.spacing(2),
-  borderTopRightRadius: theme.spacing(2),
+  transition: 'filter 0.3s ease',
 }));
 
 export const StyledCardContentWrapper = styled('div')(({ theme }) => ({
@@ -36,13 +37,15 @@ export const StyledCardActions = styled(CardActions)(({ theme }) => ({
 }));
 
 export const StyledDescription = styled(Typography)(({ theme }) => ({
-  backgroundColor: '#f4f4f4',
+  backgroundColor: '#F0EDE6',
   fontStyle: 'italic',
-  boxShadow: 'inset 0px 0px 6px rgba(0,0,0,0.1)',
+  boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
   padding: theme.spacing(1.5, 2),
   margin: theme.spacing(1, 0, 0),
-  borderRadius: theme.shape.borderRadius,
-  color: theme.palette.text.secondary,
+  borderRadius: 4,
+  border: '1px solid #1A1A1D',
+  color: '#4A4A4A',
   lineHeight: 1.6,
   fontSize: '0.95rem',
+  fontFamily: '"Inter", "Roboto", sans-serif',
 }));

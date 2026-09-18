@@ -79,6 +79,8 @@ const AllProducts = () => {
         <StyledMain>
         <StyledToolbarSpacer />
 
+        <Box id="products" sx={{ scrollMarginTop: '80px' }}>
+
         {error ? (
             <Box sx={{ textAlign: 'center', marginTop: '4rem', padding: '2rem' }}>
             <Typography variant="h6" color="error" gutterBottom>
@@ -130,6 +132,7 @@ const AllProducts = () => {
                 </Alert>
             </Snackbar>
 
+        </Box>
         </StyledMain>
     );
 };

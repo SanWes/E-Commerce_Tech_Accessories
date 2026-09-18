@@ -55,7 +55,14 @@ export const AuthProvider = ({ children }) => {
     // Logout user
     const logout = async () => {
         try {
+            // Clear cartId from localStorage to prevent next user from seeing previous cart
+            localStorage.removeItem('cartId');
+            
             await signOut(auth);
+            
+            // Refresh page to clear all state
+            window.location.reload();
+            
             return { success: true };
         } catch (error) {
             return { success: false, error: error.message };

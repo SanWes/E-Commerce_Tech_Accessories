@@ -3,15 +3,16 @@ import {
     InputLabel,
     Select,
     MenuItem,
-    Button,
     Grid,
     Typography,
     Divider,
     Chip,
+    Paper,
 } from "@mui/material";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
 import FormInput from "./FormInput";
+import RetroButton from "../common/RetroButton";
 
 const mockCountries = [
     { id: "US", label: "United States" },
@@ -77,162 +78,170 @@ const AddressForm = ({ nextStep, setShippingData }) => {
         });
     };
 
-return (
-        <>
-        <Typography variant="h6" gutterBottom>
-            Shipping Address
-        </Typography>
-        <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={3}>
-                <FormInput
-                name="firstName"
-                label="First Name"
-                validation={{
-                    required: "First name is required",
-                    pattern: {
-                    value: /^[A-Za-z\s'-]+$/,
-                    message: "Only letters are allowed",
-                    },
-                }}
-                />
-                <FormInput
-                name="lastName"
-                label="Last Name"
-                validation={{
-                    required: "Last name is required",
-                    pattern: {
-                    value: /^[A-Za-z\s'-]+$/,
-                    message: "Only letters are allowed",
-                    },
-                }}
-                />
-                <FormInput
-                name="email"
-                label="Email"
-                validation={{
-                    required: "Email is required",
-                    pattern: {
-                    value: /^\S+@\S+\.\S+$/,
-                    message: "Enter a valid email",
-                    },
-                }}
-                />
-                <FormInput
-                name="address1"
-                label="Address"
-                validation={{
-                    required: "Address is required",
-                }}
-                />
-                <FormInput
-                name="city"
-                label="City"
-                validation={{
-                    required: "City is required",
-                    pattern: {
-                    value: /^[A-Za-z\s'-]+$/,
-                    message: "Enter a valid city",
-                    },
-                }}
-                />
-                <FormInput
-                name="zip"
-                label="ZIP / Postal Code"
-                validation={{
-                    required: "ZIP code is required",
-                    pattern: {
-                    value: /^\d{5}(-\d{4})?$/,
-                    message: "Enter a valid ZIP code",
-                    },
-                }}
-                />
-
-                <Grid item xs={12} sm={6}>
-                <InputLabel>Shipping Country</InputLabel>
-                <Controller
-                    name="shippingCountry"
-                    control={control}
-                    defaultValue="US"
-                    render={({ field }) => (
-                    <Select fullWidth {...field}>
-                        {mockCountries.map((country) => (
-                        <MenuItem key={country.id} value={country.id}>
-                            {country.label}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                    )}
-                />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                <InputLabel>State / Province</InputLabel>
-                <Controller
-                    name="shippingSubdivision"
-                    control={control}
-                    defaultValue={subdivisions[0]?.id || ""}
-                    render={({ field }) => (
-                    <Select fullWidth {...field}>
-                        {subdivisions.map((subdivision) => (
-                        <MenuItem key={subdivision.id} value={subdivision.id}>
-                            {subdivision.label}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                    )}
-                />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                <InputLabel>Shipping Option</InputLabel>
-                <Controller
-                    name="shippingOption"
-                    control={control}
-                    defaultValue="standard"
-                    render={({ field }) => (
-                    <Select fullWidth {...field}>
-                        {mockShippingOptions.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                            {option.label}
-                        </MenuItem>
-                        ))}
-                    </Select>
-                    )}
-                />
-                </Grid>
-            </Grid>
-
-            <br />
-            
-            <Divider sx={{ my: 3 }}>
-                <Chip label="Portfolio Demo" size="small" color="secondary" />
-            </Divider>
-            
-            <Button
-                fullWidth
-                variant="outlined"
-                color="secondary"
-                onClick={handleDemoShipping}
-                sx={{ mb: 2 }}
-            >
-                Use Demo Shipping Info
-            </Button>
-            <Typography variant="caption" display="block" align="center" color="text.secondary" sx={{ mb: 2 }}>
-                Demo: Pre-filled shipping address for testing
+    return (
+        <Paper 
+            elevation={0}
+            sx={{ 
+                p: 4, 
+                border: '2px solid #1A1A1D',
+                backgroundColor: '#F5F5DC',
+                boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+            }}
+        >
+            <Typography variant="h6" gutterBottom>
+                Shipping Address
             </Typography>
+            <FormProvider {...methods}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={3}>
+                    <FormInput
+                    name="firstName"
+                    label="First Name"
+                    validation={{
+                        required: "First name is required",
+                        pattern: {
+                        value: /^[A-Za-z\s'-]+$/,
+                        message: "Only letters are allowed",
+                        },
+                    }}
+                    />
+                    <FormInput
+                    name="lastName"
+                    label="Last Name"
+                    validation={{
+                        required: "Last name is required",
+                        pattern: {
+                        value: /^[A-Za-z\s'-]+$/,
+                        message: "Only letters are allowed",
+                        },
+                    }}
+                    />
+                    <FormInput
+                    name="email"
+                    label="Email"
+                    validation={{
+                        required: "Email is required",
+                        pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: "Enter a valid email",
+                        },
+                    }}
+                    />
+                    <FormInput
+                    name="address1"
+                    label="Address"
+                    validation={{
+                        required: "Address is required",
+                    }}
+                    />
+                    <FormInput
+                    name="city"
+                    label="City"
+                    validation={{
+                        required: "City is required",
+                        pattern: {
+                        value: /^[A-Za-z\s'-]+$/,
+                        message: "Enter a valid city",
+                        },
+                    }}
+                    />
+                    <FormInput
+                    name="zip"
+                    label="ZIP / Postal Code"
+                    validation={{
+                        required: "ZIP code is required",
+                        pattern: {
+                        value: /^\d{5}(-\d{4})?$/,
+                        message: "Enter a valid ZIP code",
+                        },
+                    }}
+                    />
 
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button component={Link} to="/cart" variant="outlined">
-                Back to Cart
-                </Button>
-                <Button type="submit" variant="contained" color="primary">
-                Next
-                </Button>
-            </div>
-            </form>
-        </FormProvider>
-        </>
+                    <Grid item xs={12} sm={6}>
+                    <InputLabel>Shipping Country</InputLabel>
+                    <Controller
+                        name="shippingCountry"
+                        control={control}
+                        defaultValue="US"
+                        render={({ field }) => (
+                        <Select fullWidth {...field}>
+                            {mockCountries.map((country) => (
+                            <MenuItem key={country.id} value={country.id}>
+                                {country.label}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                        )}
+                    />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                    <InputLabel>State / Province</InputLabel>
+                    <Controller
+                        name="shippingSubdivision"
+                        control={control}
+                        defaultValue={subdivisions[0]?.id || ""}
+                        render={({ field }) => (
+                        <Select fullWidth {...field}>
+                            {subdivisions.map((subdivision) => (
+                            <MenuItem key={subdivision.id} value={subdivision.id}>
+                                {subdivision.label}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                        )}
+                    />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                    <InputLabel>Shipping Option</InputLabel>
+                    <Controller
+                        name="shippingOption"
+                        control={control}
+                        defaultValue="standard"
+                        render={({ field }) => (
+                        <Select fullWidth {...field}>
+                            {mockShippingOptions.map((option) => (
+                            <MenuItem key={option.id} value={option.id}>
+                                {option.label}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                        )}
+                    />
+                    </Grid>
+                </Grid>
+
+                <br />
+                
+                <Divider sx={{ my: 3 }}>
+                    <Chip label="Portfolio Demo" size="small" color="secondary" />
+                </Divider>
+                
+                <RetroButton
+                    fullWidth
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleDemoShipping}
+                    sx={{ mb: 2 }}
+                >
+                    Use Demo Shipping Info
+                </RetroButton>
+                <Typography variant="caption" display="block" align="center" color="text.secondary" sx={{ mb: 2 }}>
+                    Demo: Pre-filled shipping address for testing
+                </Typography>
+
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <RetroButton component={Link} to="/cart" variant="outlined">
+                    Back to Cart
+                    </RetroButton>
+                    <RetroButton type="submit" variant="contained" color="primary">
+                    Next
+                    </RetroButton>
+                </div>
+                </form>
+            </FormProvider>
+        </Paper>
     );
 };
 

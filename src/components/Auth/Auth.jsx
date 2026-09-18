@@ -6,7 +6,6 @@ import {
     Container, 
     Paper, 
     TextField, 
-    Button, 
     Typography, 
     Tabs, 
     Tab, 
@@ -17,6 +16,7 @@ import {
     Fade
 } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
+import RetroButton from '../common/RetroButton';
 
 // Demo credentials for portfolio testing
 const DEMO_CREDENTIALS = {
@@ -80,7 +80,15 @@ const Auth = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, mb: 4 }}>
-                <Paper elevation={3} sx={{ p: 4 }}>
+                <Paper 
+                    elevation={0} 
+                    sx={{ 
+                        p: 4, 
+                        border: '2px solid #1A1A1D',
+                        backgroundColor: '#F5F5DC',
+                        boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+                    }}
+                >
                     {showWelcome ? (
                         <Fade in={showWelcome} timeout={500}>
                             <Box sx={{ textAlign: 'center', py: 8 }}>
@@ -142,7 +150,7 @@ const Auth = () => {
                                     autoComplete={tabValue === 0 ? "current-password" : "new-password"}
                                     helperText={tabValue === 1 ? "Password must be at least 6 characters" : ""}
                                 />
-                                <Button
+                                <RetroButton
                                     type="submit"
                                     fullWidth
                                     variant="contained"
@@ -152,7 +160,7 @@ const Auth = () => {
                                     disabled={loading}
                                 >
                                     {loading ? <CircularProgress size={24} /> : (tabValue === 0 ? 'Sign In' : 'Create Account')}
-                                </Button>
+                                </RetroButton>
                             </form>
 
                             {tabValue === 0 && (
@@ -160,7 +168,7 @@ const Auth = () => {
                                     <Divider sx={{ my: 3 }}>
                                         <Chip label="Portfolio Demo" size="small" color="secondary" />
                                     </Divider>
-                                    <Button
+                                    <RetroButton
                                         fullWidth
                                         variant="outlined"
                                         color="secondary"
@@ -168,7 +176,7 @@ const Auth = () => {
                                         sx={{ mb: 1 }}
                                     >
                                         Use Demo Account
-                                    </Button>
+                                    </RetroButton>
                                     <Typography variant="caption" display="block" align="center" color="text.secondary">
                                         Demo: demo@codigospace.com / demo123456
                                     </Typography>

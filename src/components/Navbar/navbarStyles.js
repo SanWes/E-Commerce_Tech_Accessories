@@ -6,13 +6,13 @@ const drawerWidth = 0;
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
-  borderBottom: '5px solid rgba(0, 0, 0, 0.1)',
-  backgroundColor: '#2e8b57', 
+  borderBottom: '2px solid #1A1A1D',
+  backgroundColor: '#F0EDE6',
   [theme.breakpoints.up('sm')]: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
   },
-  padding: theme.spacing(0.5, 2), 
+  padding: theme.spacing(0.5, 2),
 }));
 
 export const StyledToolbar = styled(Toolbar)({
@@ -26,11 +26,12 @@ export const StyledTitle = styled(Typography)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
-  color: '#fff',
+  color: '#121214',
   fontWeight: 600,
   fontSize: '1.1rem',
+  fontFamily: '"Inter", "Roboto", sans-serif',
   '& strong': {
-    color: '#ffd700',
+    color: '#D4A017',
   },
 }));
 
@@ -38,6 +39,7 @@ export const StyledImage = styled('img')(({ theme }) => ({
   marginRight: theme.spacing(1.5),
   height: 45,
   borderRadius: 4,
+  border: '2px solid #1A1A1D',
 }));
 
 export const StyledGrow = styled('div')({
@@ -53,9 +55,11 @@ export const StyledButtonContainer = styled('div')(({ theme }) => ({
 export const StyledSearch = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha('#ffffff', 0.15),
+  backgroundColor: alpha('#1A1A1D', 0.05),
+  border: '2px solid #1A1A1D',
   '&:hover': {
-    backgroundColor: alpha('#ffffff', 0.25),
+    backgroundColor: alpha('#1A1A1D', 0.1),
+    borderColor: '#D4A017',
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -73,7 +77,7 @@ export const StyledSearchIcon = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#fff',
+  color: '#121214',
 }));
 
 export const StyledInputRoot = styled('div')({
@@ -85,7 +89,8 @@ export const StyledInputInput = styled('input')(({ theme }) => ({
   paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
   transition: theme.transitions.create('width'),
   width: '100%',
-  color: '#fff',
+  color: '#121214',
+  fontFamily: '"Fira Code", "JetBrains Mono", "Courier New", monospace',
   [theme.breakpoints.up('md')]: {
     width: '20ch',
   },
@@ -94,12 +99,14 @@ export const StyledInputInput = styled('input')(({ theme }) => ({
 export const StyledDrawerList = styled('div')(({ theme }) => ({
   width: 250,
   paddingTop: theme.spacing(2),
-  backgroundColor: '#008c71',
+  backgroundColor: '#F0EDE6',
+  borderRight: '2px solid #1A1A1D',
   height: '100%',
 }));
 
 export const StyledListItemText = styled(ListItemText)(() => ({
-  color: 'white',
-  fontWeight: 'bold',
+  color: '#121214',
+  fontWeight: 600,
   fontSize: '1.1rem',
+  fontFamily: '"Inter", "Roboto", sans-serif',
 }));

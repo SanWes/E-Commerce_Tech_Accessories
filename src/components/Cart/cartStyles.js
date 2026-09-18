@@ -7,10 +7,19 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
 
 export const Title = styled(Typography)(({ theme }) => ({
   marginTop: '5%',
+  fontFamily: '"Inter", "Roboto", sans-serif',
+  fontWeight: 700,
 }));
 
 export const EmptyButton = styled(Button)(({ theme }) => ({
   minWidth: '150px',
+  textTransform: 'none',
+  fontWeight: 600,
+  borderRadius: 4,
+  border: '2px solid #1A1A1D',
+  '&:active': {
+    transform: 'translateY(2px)',
+  },
   [theme.breakpoints.down('xs')]: {
     marginBottom: '5px',
   },
@@ -21,12 +30,22 @@ export const EmptyButton = styled(Button)(({ theme }) => ({
 
 export const CheckoutButton = styled(Button)(({ theme }) => ({
   minWidth: '150px',
+  textTransform: 'none',
+  fontWeight: 600,
+  borderRadius: 4,
+  '&:active': {
+    transform: 'translateY(2px)',
+  },
 }));
 
 export const LinkStyled = styled('a')(({ theme }) => ({
   textDecoration: 'none',
-  color: theme.palette.primary.main, // optional: add color
+  color: '#D4A017',
+  fontWeight: 600,
   cursor: 'pointer',
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 }));
 
 export const CardDetails = styled('div')(({ theme }) => ({
@@ -34,12 +53,12 @@ export const CardDetails = styled('div')(({ theme }) => ({
   bottom: 0,
   left: 0,
   zIndex: 1000,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: '#F5F5DC',
   padding: theme.spacing(3),
   marginTop: theme.spacing(4),
-  boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.1)',
-  borderTop: `1px solid ${theme.palette.divider}`,
-  borderRadius: '12px 12px 0 0',
+  border: '2px solid #1A1A1D',
+  boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+  borderRadius: '4px 4px 0 0',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',

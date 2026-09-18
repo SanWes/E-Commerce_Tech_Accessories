@@ -6,6 +6,7 @@ import {
     Box,
 } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
+import RetroBadge from '../../common/RetroBadge';
 
 import {
     StyledCard,
@@ -16,9 +17,11 @@ import {
 } from './OneProductStyles';
 
 const OneProduct = ({ product, onAddToCart }) => {
+    // Generate a mock model number for retro effect
+    const modelNumber = `CGS-${product.id.toString().padStart(4, '0')}`;
     
     return (
-        <StyledCard>
+        <StyledCard className="product-schematic">
         <StyledCardMedia
             component="img"
             loading="lazy"
@@ -29,12 +32,27 @@ const OneProduct = ({ product, onAddToCart }) => {
         <CardContent sx={{ paddingBottom: 0 }}>
             <StyledCardContentWrapper>
             
+            <Typography 
+                variant="caption" 
+                sx={{ 
+                    fontFamily: '"Fira Code", "JetBrains Mono", "Courier New", monospace',
+                    color: '#4A4A4A',
+                    marginBottom: 0.5,
+                }}
+            >
+                {modelNumber}
+            </Typography>
+            
             <Typography variant="h6" fontWeight={600} gutterBottom>
                 {product.name}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
-                ${product.price}
-            </Typography>
+            
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 1 }}>
+                <Typography variant="body1" color="text.secondary" fontWeight={600}>
+                    ${product.price}
+                </Typography>
+                <RetroBadge variant="stock">IN STOCK</RetroBadge>
+            </Box>
             </StyledCardContentWrapper>
 
             {product.description && (
@@ -52,8 +70,16 @@ const OneProduct = ({ product, onAddToCart }) => {
             color="primary"
             startIcon={<AddShoppingCart />}
             onClick={() => onAddToCart(product.id, 1)}
+            sx={{
+                textTransform: 'none',
+                fontWeight: 600,
+                borderRadius: 4,
+                '&:active': {
+                    transform: 'translateY(2px)',
+                },
+            }}
             >
-            Add to Cart
+            Load to Cart
             </Button>
         </StyledCardActions>
         </StyledCard>

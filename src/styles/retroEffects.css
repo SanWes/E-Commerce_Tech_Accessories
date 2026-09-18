@@ -1,0 +1,79 @@
+/* Retro Effects - Portfolio Friendly/Subtle */
+
+/* Subtle grid pattern background */
+.retro-grid-bg {
+  background-color: #F0EDE6;
+  background-image: 
+    linear-gradient(rgba(26, 26, 29, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 29, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Blocky border with inner shadow */
+.retro-border {
+  border: 2px solid #1A1A1D;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Subtle border glow on hover */
+.retro-border-glow {
+  border: 2px solid #1A1A1D;
+  transition: all 0.3s ease;
+}
+
+.retro-border-glow:hover {
+  border-color: #D4A017;
+  box-shadow: 0 0 8px rgba(212, 160, 23, 0.3);
+}
+
+/* Mechanical button press animation */
+.retro-button-press {
+  transition: transform 0.1s ease;
+}
+
+.retro-button-press:active {
+  transform: translateY(2px);
+}
+
+/* Monospace font for technical specs */
+.retro-mono {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Product schematic hover effect - grayscale filter */
+.product-schematic:hover img {
+  filter: grayscale(100%) contrast(1.2);
+  transition: filter 0.3s ease;
+}
+
+/* Retro badge styling */
+.retro-badge {
+  font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border: 2px solid #1A1A1D;
+  background-color: #F5F5DC;
+  color: #121214;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Out of stock muted styling */
+.retro-out-of-stock {
+  opacity: 0.6;
+  filter: grayscale(100%);
+  pointer-events: none;
+}
+
+/* Terminal-style drawer */
+.reto-terminal-drawer {
+  background-color: #F0EDE6;
+  border: 2px solid #1A1A1D;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Global body background */
+body {
+  background-color: #F0EDE6;
+}

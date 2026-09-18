@@ -12,7 +12,7 @@ import {
     useMediaQuery
 } from '@mui/material';
 import { ShoppingCartOutlined, Menu as MenuIcon, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 
@@ -29,7 +29,6 @@ import {
 } from './NavbarStyles';
 
 const Navbar = () => {
-    const location = useLocation();
     const { cartCount } = useCart();
     const { user, logout } = useAuth();
     const theme = useTheme();
@@ -94,7 +93,13 @@ const Navbar = () => {
                 anchor="left"
                 open={drawerOpen}
                 onClose={toggleDrawer(false)}
-                PaperProps={{ sx: { backgroundColor: 'SeaGreen', color: 'white' } }}
+                PaperProps={{ 
+                    sx: { 
+                        backgroundColor: '#F0EDE6', 
+                        borderRight: '2px solid #1A1A1D',
+                        width: 280,
+                    } 
+                }}
                 >
                 {drawerList}
                 </Drawer>
@@ -108,8 +113,7 @@ const Navbar = () => {
 
             <StyledGrow />
 
-            {/* Cart icon always visible */}
-            {location.pathname === '/' && (
+            {/* Cart icon always visible on all pages */}
             <StyledButtonContainer>
                 <IconButton
                 component={Link}
@@ -142,7 +146,6 @@ const Navbar = () => {
                 </Button>
                 )}
             </StyledButtonContainer>
-            )}
         </StyledToolbar>
         </StyledAppBar>
     );
