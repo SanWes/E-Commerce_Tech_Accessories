@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, CircularProgress, Snackbar, Alert } from '@mui/material';
+import { Grid, Snackbar, Alert, Skeleton, Button, Box, Typography } from '@mui/material';
+import { Refresh } from '@mui/icons-material';
 import OneProduct from '../OneProduct/OneProduct';
 
 import {
@@ -8,32 +9,15 @@ import {
     StyledGridContainer
 } from './AllProductsStyles';
 
-import { fetchAllProducts } from '../../../config/fetchAllProducts';
+import useProducts from '../../../hooks/useProducts';
 import { getOrCreateCart, addToCart } from '../../../config/fetchCarts';
 
 const AllProducts = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { products, loading, error } = useProducts('smartphones');
     const [cart, setCart] = useState(null);
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
-
-    // Load all products
-    useEffect(() => {
-        const loadProducts = async () => {
-        try {
-            const data = await fetchAllProducts();
-            setProducts(data);
-        } catch (error) {
-            console.error("Error fetching products:", error);
-        } finally {
-            setLoading(false);
-        }
-        };
-
-        loadProducts();
-    }, []);
 
     // Get or create cart on mount
     useEffect(() => {
@@ -95,10 +79,36 @@ const AllProducts = () => {
         <StyledMain>
         <StyledToolbarSpacer />
 
-        {loading ? (
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <CircularProgress />
-            </div>
+        {error ? (
+            <Box sx={{ textAlign: 'center', marginTop: '4rem', padding: '2rem' }}>
+            <Typography variant="h6" color="error" gutterBottom>
+                Failed to load products
+            </Typography>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+                {error}
+            </Typography>
+            <Button 
+                variant="contained" 
+                startIcon={<Refresh />}
+                onClick={() => window.location.reload()}
+                sx={{ marginTop: '1rem' }}
+            >
+                Retry
+            </Button>
+            </Box>
+        ) : loading ? (
+            <StyledGridContainer container spacing={4}>
+            {[...Array(8)].map((_, index) => (
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                <Box sx={{ height: '100%' }}>
+                    <Skeleton variant="rectangular" width="100%" height={200} />
+                    <Skeleton variant="text" width="80%" height={32} sx={{ mt: 2 }} />
+                    <Skeleton variant="text" width="40%" height={24} sx={{ mt: 1 }} />
+                    <Skeleton variant="rectangular" width="100%" height={40} sx={{ mt: 2 }} />
+                </Box>
+                </Grid>
+            ))}
+            </StyledGridContainer>
         ) : (
             <StyledGridContainer container spacing={4}>
             {products.map((product) => (

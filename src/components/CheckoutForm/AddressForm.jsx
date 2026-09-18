@@ -6,6 +6,8 @@ import {
     Button,
     Grid,
     Typography,
+    Divider,
+    Chip,
 } from "@mui/material";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -32,6 +34,19 @@ const mockShippingOptions = [
     { id: "express", label: "Express - $10.00" },
 ];
 
+// Demo shipping data for portfolio testing
+const DEMO_SHIPPING = {
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'demo@codigospace.com',
+    address1: '123 Demo Street',
+    city: 'San Francisco',
+    shippingCountry: 'US',
+    shippingSubdivision: 'CA',
+    zip: '94102',
+    shippingOption: 'standard'
+};
+
 const AddressForm = ({ nextStep, setShippingData }) => {
     const methods = useForm();
     const {
@@ -39,7 +54,6 @@ const AddressForm = ({ nextStep, setShippingData }) => {
         handleSubmit,
         setValue,
         watch,
-        formState: { errors },
     } = methods;
 
     const [subdivisions, setSubdivisions] = useState(mockSubdivisions["US"]);
@@ -55,6 +69,12 @@ const AddressForm = ({ nextStep, setShippingData }) => {
     const onSubmit = (data) => {
         setShippingData(data);
         // nextStep(); // Optional: if using multistep
+    };
+
+    const handleDemoShipping = () => {
+        Object.keys(DEMO_SHIPPING).forEach(key => {
+            setValue(key, DEMO_SHIPPING[key]);
+        });
     };
 
 return (
@@ -184,6 +204,24 @@ return (
             </Grid>
 
             <br />
+            
+            <Divider sx={{ my: 3 }}>
+                <Chip label="Portfolio Demo" size="small" color="secondary" />
+            </Divider>
+            
+            <Button
+                fullWidth
+                variant="outlined"
+                color="secondary"
+                onClick={handleDemoShipping}
+                sx={{ mb: 2 }}
+            >
+                Use Demo Shipping Info
+            </Button>
+            <Typography variant="caption" display="block" align="center" color="text.secondary" sx={{ mb: 2 }}>
+                Demo: Pre-filled shipping address for testing
+            </Typography>
+
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Button component={Link} to="/cart" variant="outlined">
                 Back to Cart

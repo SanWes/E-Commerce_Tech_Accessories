@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
-import { Products, Navbar, Cart, Checkout } from './components';
+import { Products, Navbar, Cart, Checkout, Auth, ProtectedRoute } from './components';
 
-import { fetchAllProducts } from './config/fetchAllProducts';
 import { getOrCreateCart } from './config/fetchCarts';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
-    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState(null);
-    const [order, setOrder] = useState({});
-    const [errorMessage, setErrorMessage] = useState('');
+    // const [order, setOrder] = useState({}); // For future checkout functionality
+    // const [errorMessage, setErrorMessage] = useState(''); // For future checkout functionality
 
-  // On first load: fetch products and initialize cart
+  // On first load: initialize cart
 useEffect(() => {
     const initialize = async () => {
         try {
-            const [productsData, cartData] = await Promise.all([
-                fetchAllProducts(),
-                getOrCreateCart(),
-            ]);
-
-            setProducts(productsData);
+            const cartData = await getOrCreateCart();
             setCart(cartData);
             } catch (error) {
             console.error('Initialization error:', error);
@@ -37,6 +31,7 @@ const totalItems = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) ||
 
 return (
 
+        <AuthProvider>
         <CartProvider cart={cart}>
 
         <Router>
@@ -46,7 +41,11 @@ return (
             <Routes>
             <Route
                 path="/"
-                element={<Products products={products} />}
+                element={<Products />}
+            />
+            <Route
+                path="/auth"
+                element={<Auth />}
             />
             <Route
                 path="/cart"
@@ -55,18 +54,21 @@ return (
             <Route
                 path="/checkout"
                 element={
-                <Checkout
+                <ProtectedRoute>
+                    <Checkout
                     cart={cart}
                     setCart={setCart}
-                    order={order}
-                    error={errorMessage}
-                />
+                    order={{}}
+                    error={""}
+                    />
+                </ProtectedRoute>
                 }
             />
             </Routes>
         </div>
         </Router>
         </CartProvider>
+        </AuthProvider>
     );
 };
 

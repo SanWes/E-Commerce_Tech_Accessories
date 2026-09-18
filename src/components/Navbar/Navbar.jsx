@@ -1,23 +1,20 @@
 // Navbar.jsx
 import React, { useState } from 'react';
 import {
-    AppBar,
-    Toolbar,
     IconButton,
     Badge,
-    Typography,
     Drawer,
     List,
     ListItem,
-    ListItemText,
     Divider,
-    Box,
+    Button,
     useTheme,
     useMediaQuery
 } from '@mui/material';
-import { ShoppingCartOutlined, Menu as MenuIcon } from '@mui/icons-material';
+import { ShoppingCartOutlined, Menu as MenuIcon, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 
 import logo2 from '../../assets/logo.jpg';
 import {
@@ -34,9 +31,14 @@ import {
 const Navbar = () => {
     const location = useLocation();
     const { cartCount } = useCart();
+    const { user, logout } = useAuth();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleLogout = async () => {
+        await logout();
+    };
 
     const toggleDrawer = (open) => () => {
         setDrawerOpen(open);
@@ -56,6 +58,18 @@ const Navbar = () => {
             <ListItem button component={Link} to="/cart">
             <StyledListItemText primary="Cart" />
             </ListItem>
+            <Divider sx={{ backgroundColor: 'white' }} />
+            {user ? (
+            <>
+                <ListItem button onClick={handleLogout}>
+                <StyledListItemText primary="Logout" />
+                </ListItem>
+            </>
+            ) : (
+            <ListItem button component={Link} to="/auth">
+                <StyledListItemText primary="Login" />
+            </ListItem>
+            )}
         </List>
         </StyledDrawerList>
     );
@@ -107,6 +121,26 @@ const Navbar = () => {
                     <ShoppingCartOutlined />
                 </Badge>
                 </IconButton>
+                {user ? (
+                <Button 
+                    color="inherit" 
+                    startIcon={<LogoutIcon />}
+                    onClick={handleLogout}
+                    sx={{ ml: 1 }}
+                >
+                    Logout
+                </Button>
+                ) : (
+                <Button 
+                    color="inherit" 
+                    startIcon={<LoginIcon />}
+                    component={Link}
+                    to="/auth"
+                    sx={{ ml: 1 }}
+                >
+                    Login
+                </Button>
+                )}
             </StyledButtonContainer>
             )}
         </StyledToolbar>

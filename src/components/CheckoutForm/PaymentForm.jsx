@@ -1,7 +1,15 @@
 import React from 'react';
-import { Typography, Button, Divider, TextField } from '@mui/material';
+import { Typography, Button, Divider, TextField, Chip } from '@mui/material';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 import Review from './Review';
+
+// Demo payment data for portfolio testing
+const DEMO_PAYMENT = {
+    cardName: 'John Doe',
+    cardNumber: '4242424242424242',
+    expDate: '12/25',
+    cvc: '123'
+};
 
 const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFirebaseOrder }) => {
     const methods = useForm({
@@ -14,7 +22,14 @@ const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFireba
         }
     });
 
-    const { handleSubmit, control, formState: { errors } } = methods;
+    const { handleSubmit, control, formState: { errors }, setValue } = methods;
+
+    const handleDemoPayment = () => {
+        setValue('cardName', DEMO_PAYMENT.cardName);
+        setValue('cardNumber', DEMO_PAYMENT.cardNumber);
+        setValue('expDate', DEMO_PAYMENT.expDate);
+        setValue('cvc', DEMO_PAYMENT.cvc);
+    };
 
     const onSubmit = (data) => {
         const orderData = {
@@ -137,6 +152,24 @@ const PaymentForm = ({ cartItems, shippingData, backStep, nextStep, handleFireba
             />
 
             <br />
+            
+            <Divider sx={{ my: 3 }}>
+                <Chip label="Portfolio Demo" size="small" color="secondary" />
+            </Divider>
+            
+            <Button
+                fullWidth
+                variant="outlined"
+                color="secondary"
+                onClick={handleDemoPayment}
+                sx={{ mb: 2 }}
+            >
+                Use Demo Payment Info
+            </Button>
+            <Typography variant="caption" display="block" align="center" color="text.secondary" sx={{ mb: 2 }}>
+                Demo: 4242 4242 4242 4242 (Test Stripe card)
+            </Typography>
+
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button variant="outlined" onClick={backStep}>
                 Back
